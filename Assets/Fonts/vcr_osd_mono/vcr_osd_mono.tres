@@ -1,0 +1,6 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://btcnqso0qn8dt"]
+
+[ext_resource type="FontFile" uid="uid://btnuwws4sk7bc" path="res://Assets/Fonts/vcr_osd_mono/VCR_OSD_MONO_1.001.ttf" id="1_21btx"]
+
+[resource]
+base_font = ExtResource("1_21btx")

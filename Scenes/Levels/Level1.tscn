@@ -1,0 +1,124 @@
+[gd_scene load_steps=13 format=3 uid="uid://enmsdybq6nat"]
+
+[ext_resource type="Script" path="res://Scenes/Levels/LevelManager.gd" id="1_71brr"]
+[ext_resource type="PackedScene" uid="uid://dxp36eai7b31a" path="res://Entities/Wall/Wall.tscn" id="1_aajrr"]
+[ext_resource type="PackedScene" uid="uid://bqr51516qf5gq" path="res://Entities/Player/Player.tscn" id="1_k50qg"]
+[ext_resource type="TileSet" uid="uid://uehi578ltai5" path="res://Assets/FloorTileSet/FloorTileSet.tres" id="2_0jul5"]
+[ext_resource type="PackedScene" uid="uid://buxny4r1u7dop" path="res://Entities/TransitionScreen/TransitionScreen.tscn" id="2_6k5c3"]
+[ext_resource type="FontVariation" uid="uid://btcnqso0qn8dt" path="res://Assets/Fonts/vcr_osd_mono/vcr_osd_mono.tres" id="3_xerqt"]
+[ext_resource type="PackedScene" uid="uid://bq7r8f7qynf6j" path="res://Entities/GoalArea/GoalArea.tscn" id="3_xxgsp"]
+[ext_resource type="Script" path="res://Scenes/Levels/Instructions.gd" id="3_y65qc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_c7cl7"]
+line_spacing = 10.0
+font = ExtResource("3_xerqt")
+font_size = 20
+
+[sub_resource type="Animation" id="Animation_rniqc"]
+resource_name = "Fade Out"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:label_settings:font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 9, 10),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_t21el"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:label_settings:font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kwq1h"]
+_data = {
+"Fade Out": SubResource("Animation_rniqc"),
+"RESET": SubResource("Animation_t21el")
+}
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_71brr")
+next_level = "res://Scenes/Levels/Level2.tscn"
+
+[node name="TransitionScreen" parent="." instance=ExtResource("2_6k5c3")]
+
+[node name="Instructions" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_y65qc")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Instructions"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 87.0
+offset_top = 331.0
+offset_right = 1189.0
+offset_bottom = 387.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Use the arrow keys and space bar to move and jump.
+Move through the obstacles and reach the goal line! Make sure your mirrored self does as well."
+label_settings = SubResource("LabelSettings_c7cl7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Instructions"]
+libraries = {
+"": SubResource("AnimationLibrary_kwq1h")
+}
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="LeftWall" parent="Walls" instance=ExtResource("1_aajrr")]
+position = Vector2(-10, 360)
+
+[node name="RightWall" parent="Walls" instance=ExtResource("1_aajrr")]
+position = Vector2(1290, 360)
+
+[node name="Players" type="Node2D" parent="."]
+
+[node name="NormalPlayer" parent="Players" instance=ExtResource("1_k50qg")]
+position = Vector2(32, 680)
+
+[node name="MirrorPlayer" parent="Players" instance=ExtResource("1_k50qg")]
+position = Vector2(32, 38)
+up_direction = Vector2(0, 1)
+
+[node name="Sprite2D" parent="Players/MirrorPlayer" index="0"]
+scale = Vector2(1, -1)
+
+[node name="GoalArea" parent="." instance=ExtResource("3_xxgsp")]
+position = Vector2(1270, 360)
+
+[node name="FloorTileMap" type="TileMap" parent="."]
+tile_set = ExtResource("2_0jul5")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 16, 1, 0, 17, 1, 0, 18, 1, 0, 19, 1, 0, 20, 1, 0, 21, 1, 0, 22, 1, 0, 23, 1, 0, 33, 1, 0, 34, 1, 0, 35, 1, 0, 2883663, 1, 0, 2883662, 1, 0, 2883661, 1, 0, 2883660, 1, 0, 2883659, 1, 0, 2883658, 1, 0, 2883657, 1, 0, 2883656, 1, 0, 2883655, 1, 0, 2883654, 1, 0, 2883653, 1, 0, 2883652, 1, 0, 2883651, 1, 0, 2883650, 1, 0, 2883649, 1, 0, 2883648, 1, 0, 2883647, 1, 0, 2883634, 1, 0, 2883633, 1, 0, 2883632, 1, 0, 2883631, 1, 0, 2883630, 1, 0, 2883629, 1, 0, 2883628, 1, 0, 2883627, 1, 0, 2883626, 1, 0, 2883616, 1, 0, 2883615, 1, 0, 2883614, 1, 0, 2883613, 1, 0, 2883612, 1, 0, 2883611, 1, 0, 2883610, 1, 0, 2883609, 1, 0, 2883608, 1, 0, 2883598, 1, 0, 2883592, 1, 0, 2883591, 1, 0, 2883590, 1, 0, 2883589, 1, 0, 2883588, 1, 0, 2883587, 1, 0, 2883586, 1, 0, 2883585, 1, 0, 2883584, 1, 0, 79, 1, 0, 78, 1, 0, 77, 1, 0, 76, 1, 0, 75, 1, 0, 74, 1, 0, 73, 1, 0, 72, 1, 0, 71, 1, 0, 70, 1, 0, 69, 1, 0, 59, 1, 0, 58, 1, 0, 57, 1, 0, 56, 1, 0, 55, 1, 0, 54, 1, 0, 53, 1, 0, 52, 1, 0, 2883593, 1, 0, 2883594, 1, 0, 2883595, 1, 0, 2883596, 1, 0, 2883597, 1, 0, 2883644, 1, 0, 2883645, 1, 0, 2883646, 1, 0, 11, 1, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 51, 1, 0, 2818063, 1, 0, 2752527, 1, 0, 2686991, 1, 0, 2686999, 1, 0, 2752535, 1, 0, 2818071, 1, 0, 2686992, 1, 0, 2686993, 1, 0, 2686994, 1, 0, 2686995, 1, 0, 2686996, 1, 0, 2686997, 1, 0, 2686998, 1, 0, 36, 1, 0, 37, 1, 0, 38, 1, 0, 39, 1, 0, 40, 1, 0, 41, 1, 0, 65560, 1, 0, 131096, 1, 0, 196632, 1, 0, 196633, 1, 0, 196634, 1, 0, 196635, 1, 0, 196636, 1, 0, 196637, 1, 0, 196638, 1, 0, 196639, 1, 0, 196640, 1, 0, 131104, 1, 0, 65568, 1, 0, 2818081, 1, 0, 2752545, 1, 0, 2687009, 1, 0, 2687010, 1, 0, 2687011, 1, 0, 2687012, 1, 0, 2687013, 1, 0, 2687014, 1, 0, 2687015, 1, 0, 2687016, 1, 0, 2687017, 1, 0, 2752553, 1, 0, 2818089, 1, 0, 65578, 1, 0, 131114, 1, 0, 196650, 1, 0, 196651, 1, 0, 196652, 1, 0, 196653, 1, 0, 196654, 1, 0, 196655, 1, 0, 196656, 1, 0, 196657, 1, 0, 196658, 1, 0, 131122, 1, 0, 65586, 1, 0, 2818099, 1, 0, 2752563, 1, 0, 2687027, 1, 0, 2687028, 1, 0, 2687029, 1, 0, 2687030, 1, 0, 2687031, 1, 0, 2687032, 1, 0, 2687033, 1, 0, 2687034, 1, 0, 2687035, 1, 0, 2752571, 1, 0, 2818107, 1, 0, 65596, 1, 0, 131132, 1, 0, 196668, 1, 0, 196669, 1, 0, 196670, 1, 0, 196671, 1, 0, 196672, 1, 0, 196673, 1, 0, 196674, 1, 0, 196675, 1, 0, 196676, 1, 0, 131140, 1, 0, 65604, 1, 0, 24, 1, 0, 25, 1, 0, 26, 1, 0, 27, 1, 0, 28, 1, 0, 29, 1, 0, 30, 1, 0, 31, 1, 0, 32, 1, 0, 42, 1, 0, 43, 1, 0, 44, 1, 0, 45, 1, 0, 46, 1, 0, 47, 1, 0, 48, 1, 0, 49, 1, 0, 50, 1, 0, 60, 1, 0, 61, 1, 0, 62, 1, 0, 63, 1, 0, 64, 1, 0, 65, 1, 0, 66, 1, 0, 67, 1, 0, 68, 1, 0, 2883599, 1, 0, 2883600, 1, 0, 2883601, 1, 0, 2883602, 1, 0, 2883603, 1, 0, 2883604, 1, 0, 2883605, 1, 0, 2883606, 1, 0, 2883607, 1, 0, 2883617, 1, 0, 2883618, 1, 0, 2883619, 1, 0, 2883620, 1, 0, 2883621, 1, 0, 2883622, 1, 0, 2883623, 1, 0, 2883624, 1, 0, 2883625, 1, 0, 2883635, 1, 0, 2883636, 1, 0, 2883637, 1, 0, 2883638, 1, 0, 2883639, 1, 0, 2883640, 1, 0, 2883641, 1, 0, 2883642, 1, 0, 2883643, 1, 0)
+
+[connection signal="faded_to_black" from="TransitionScreen" to="." method="_on_transition_screen_faded_to_black"]
+[connection signal="started_fade_to_normal" from="TransitionScreen" to="." method="_on_transition_screen_started_fade_to_normal"]
+[connection signal="goal_cleared" from="GoalArea" to="." method="_on_goal_area_goal_cleared"]
+
+[editable path="Players/MirrorPlayer"]

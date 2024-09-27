@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bq7r8f7qynf6j"]
+
+[ext_resource type="Texture2D" uid="uid://c2ruy8rcykbqw" path="res://Entities/GoalArea/GoalArea.png" id="1_gn1qv"]
+[ext_resource type="Script" path="res://Entities/GoalArea/GoalArea.gd" id="1_h3w3q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wue8p"]
+size = Vector2(20, 720)
+
+[node name="GoalArea" type="Area2D"]
+collision_layer = 8
+monitorable = false
+script = ExtResource("1_h3w3q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wue8p")
+debug_color = Color(0.211765, 0.768627, 0.403922, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_gn1qv")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

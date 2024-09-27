@@ -1,0 +1,90 @@
+[gd_scene load_steps=6 format=3 uid="uid://dq5747cukssjq"]
+
+[ext_resource type="Script" path="res://Scenes/Title/TitleScene.gd" id="1_8ljn4"]
+[ext_resource type="PackedScene" uid="uid://buxny4r1u7dop" path="res://Entities/TransitionScreen/TransitionScreen.tscn" id="2_6jp71"]
+[ext_resource type="FontVariation" uid="uid://btcnqso0qn8dt" path="res://Assets/Fonts/vcr_osd_mono/vcr_osd_mono.tres" id="3_5y3ba"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gd6e0"]
+font = ExtResource("3_5y3ba")
+font_size = 140
+
+[sub_resource type="LabelSettings" id="LabelSettings_iv6e0"]
+font = ExtResource("3_5y3ba")
+font_size = 18
+
+[node name="TitleScene" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8ljn4")
+start_level = "res://Scenes/Levels/Level1.tscn"
+
+[node name="TransitionScreen" parent="." instance=ExtResource("2_6jp71")]
+
+[node name="VSplitContainer" type="VSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 240
+dragger_visibility = 1
+
+[node name="Title" type="Label" parent="VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "MIRROR WORLD"
+label_settings = SubResource("LabelSettings_gd6e0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSplitContainer" type="VSplitContainer" parent="VSplitContainer"]
+layout_mode = 2
+split_offset = 100
+dragger_visibility = 1
+
+[node name="EmptySpace" type="Control" parent="VSplitContainer/VSplitContainer"]
+layout_mode = 2
+
+[node name="VSplitContainer" type="VSplitContainer" parent="VSplitContainer/VSplitContainer"]
+layout_mode = 2
+split_offset = 178
+dragger_visibility = 1
+
+[node name="VSplitContainer" type="VSplitContainer" parent="VSplitContainer/VSplitContainer/VSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+split_offset = 89
+dragger_visibility = 1
+
+[node name="StartButton" type="Button" parent="VSplitContainer/VSplitContainer/VSplitContainer/VSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("3_5y3ba")
+theme_override_font_sizes/font_size = 40
+text = "START"
+flat = true
+
+[node name="ExitButton" type="Button" parent="VSplitContainer/VSplitContainer/VSplitContainer/VSplitContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5y3ba")
+theme_override_font_sizes/font_size = 40
+text = "EXIT"
+flat = true
+
+[node name="Credit" type="Label" parent="VSplitContainer/VSplitContainer/VSplitContainer"]
+layout_mode = 2
+text = "Made by Fernando Vargas Torres (fernandovar) for the FHL2023GameJam"
+label_settings = SubResource("LabelSettings_iv6e0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="faded_to_black" from="TransitionScreen" to="." method="_on_transition_screen_faded_to_black"]
+[connection signal="started_fade_to_normal" from="TransitionScreen" to="." method="_on_transition_screen_started_fade_to_normal"]
+[connection signal="button_up" from="VSplitContainer/VSplitContainer/VSplitContainer/VSplitContainer/StartButton" to="." method="_on_start_button_button_up"]
+[connection signal="button_up" from="VSplitContainer/VSplitContainer/VSplitContainer/VSplitContainer/ExitButton" to="." method="_on_exit_button_button_up"]

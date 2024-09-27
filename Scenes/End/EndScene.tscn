@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://dkxsdkqmo88lp"]
+
+[ext_resource type="Script" path="res://Scenes/End/EndScene.gd" id="1_8iyk4"]
+[ext_resource type="PackedScene" uid="uid://buxny4r1u7dop" path="res://Entities/TransitionScreen/TransitionScreen.tscn" id="2_dkgio"]
+[ext_resource type="FontVariation" uid="uid://btcnqso0qn8dt" path="res://Assets/Fonts/vcr_osd_mono/vcr_osd_mono.tres" id="3_em5fb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sakef"]
+font = ExtResource("3_em5fb")
+font_size = 70
+
+[sub_resource type="LabelSettings" id="LabelSettings_540jn"]
+font = ExtResource("3_em5fb")
+font_size = 30
+
+[node name="EndScreen" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8iyk4")
+title_scene = "res://Scenes/Title/TitleScene.tscn"
+
+[node name="TransitionScreen" parent="." instance=ExtResource("2_dkgio")]
+
+[node name="VSplitContainer" type="VSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 240
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VSplitContainer"]
+layout_mode = 2
+
+[node name="Congratulations" type="Label" parent="VSplitContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+CONGRATULATIONS!
+"
+label_settings = SubResource("LabelSettings_sakef")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ClearedMessage" type="Label" parent="VSplitContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+You have cleared all levels 
+
+Thank you for playing"
+label_settings = SubResource("LabelSettings_540jn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="VSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_em5fb")
+theme_override_font_sizes/font_size = 40
+text = "Go back to title screen"
+flat = true
+
+[connection signal="faded_to_black" from="TransitionScreen" to="." method="_on_transition_screen_faded_to_black"]
+[connection signal="started_fade_to_normal" from="TransitionScreen" to="." method="_on_transition_screen_started_fade_to_normal"]
+[connection signal="button_up" from="VSplitContainer/Button" to="." method="_on_button_button_up"]
